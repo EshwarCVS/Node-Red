@@ -1,0 +1,233 @@
+[
+    {
+        "id": "1ead23c248d7c0f9",
+        "type": "tab",
+        "label": "Tutorial Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "e709bf8418b14a1f",
+        "type": "tab",
+        "label": "Tutorial Flow 2",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "f412939372b2ccf8",
+        "type": "inject",
+        "z": "1ead23c248d7c0f9",
+        "name": "Message",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 190,
+        "y": 180,
+        "wires": [
+            [
+                "53d65154cbd50ede"
+            ]
+        ]
+    },
+    {
+        "id": "1c251e4cf71e99b4",
+        "type": "debug",
+        "z": "1ead23c248d7c0f9",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 550,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "53d65154cbd50ede",
+        "type": "function",
+        "z": "1ead23c248d7c0f9",
+        "name": "message",
+        "func": "var date = new Date(msg.payload);\n\nmsg.payload = date.toString();\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 180,
+        "wires": [
+            [
+                "1c251e4cf71e99b4"
+            ]
+        ]
+    },
+    {
+        "id": "2a6e21b4e0c5a500",
+        "type": "inject",
+        "z": "e709bf8418b14a1f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "10",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 220,
+        "wires": [
+            [
+                "fad23b9833747f87"
+            ]
+        ]
+    },
+    {
+        "id": "fad23b9833747f87",
+        "type": "http request",
+        "z": "e709bf8418b14a1f",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.csv",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 340,
+        "y": 220,
+        "wires": [
+            [
+                "06c512fa214f10ac"
+            ]
+        ]
+    },
+    {
+        "id": "06c512fa214f10ac",
+        "type": "csv",
+        "z": "e709bf8418b14a1f",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "none",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 500,
+        "y": 220,
+        "wires": [
+            [
+                "4527201fcf1bc5e9",
+                "9a18dda30ffa927a"
+            ]
+        ]
+    },
+    {
+        "id": "4527201fcf1bc5e9",
+        "type": "debug",
+        "z": "e709bf8418b14a1f",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 650,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "9a18dda30ffa927a",
+        "type": "switch",
+        "z": "e709bf8418b14a1f",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gte",
+                "v": "7",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 630,
+        "y": 340,
+        "wires": [
+            [
+                "f757ac4022f1ec22"
+            ]
+        ]
+    },
+    {
+        "id": "f757ac4022f1ec22",
+        "type": "change",
+        "z": "e709bf8418b14a1f",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "PANIC!",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 780,
+        "y": 340,
+        "wires": [
+            [
+                "db695bb9629fa79b"
+            ]
+        ]
+    },
+    {
+        "id": "db695bb9629fa79b",
+        "type": "debug",
+        "z": "e709bf8418b14a1f",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 900,
+        "y": 260,
+        "wires": []
+    }
+]
