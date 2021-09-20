@@ -1,83 +1,44 @@
 [
     {
-        "id": "1ead23c248d7c0f9",
+        "id": "e0a78ccaa1a24fee",
         "type": "tab",
-        "label": "Tutorial Flow 1",
+        "label": "Buyer",
         "disabled": false,
         "info": ""
     },
     {
-        "id": "e709bf8418b14a1f",
+        "id": "5a272a95b9e43fd7",
         "type": "tab",
-        "label": "Tutorial Flow 2",
+        "label": "eBay",
         "disabled": false,
         "info": ""
     },
     {
-        "id": "f412939372b2ccf8",
+        "id": "0d5af171dffc9b33",
+        "type": "tab",
+        "label": "PayPal",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "206c16fe0637f37b",
+        "type": "tab",
+        "label": "Merchant",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "6a73d91210fde3f6",
+        "type": "tab",
+        "label": "Shipping Service",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "e423e9696fa8bcc2",
         "type": "inject",
-        "z": "1ead23c248d7c0f9",
-        "name": "Message",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "60",
-        "crontab": "",
-        "once": true,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payloadType": "date",
-        "x": 190,
-        "y": 180,
-        "wires": [
-            [
-                "53d65154cbd50ede"
-            ]
-        ]
-    },
-    {
-        "id": "1c251e4cf71e99b4",
-        "type": "debug",
-        "z": "1ead23c248d7c0f9",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 550,
-        "y": 180,
-        "wires": []
-    },
-    {
-        "id": "53d65154cbd50ede",
-        "type": "function",
-        "z": "1ead23c248d7c0f9",
-        "name": "message",
-        "func": "var date = new Date(msg.payload);\n\nmsg.payload = date.toString();\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 360,
-        "y": 180,
-        "wires": [
-            [
-                "1c251e4cf71e99b4"
-            ]
-        ]
-    },
-    {
-        "id": "2a6e21b4e0c5a500",
-        "type": "inject",
-        "z": "e709bf8418b14a1f",
-        "name": "",
+        "z": "e0a78ccaa1a24fee",
+        "name": "Submit Order to eBay",
         "props": [
             {
                 "p": "payload"
@@ -87,117 +48,1214 @@
                 "vt": "str"
             }
         ],
-        "repeat": "10",
+        "repeat": "",
         "crontab": "",
-        "once": true,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payloadType": "date",
+        "once": false,
+        "onceDelay": "1",
+        "topic": "Ordering 2 glasses",
+        "payload": "{\"ID\":\"1\",\"Item\":\"Glass\",\"Price\":\"20\",\"Quantity\":\"2\",\"Payment\":\"No\"}",
+        "payloadType": "json",
+        "x": 140,
+        "y": 80,
+        "wires": [
+            [
+                "fd35034f31dc58cc"
+            ]
+        ]
+    },
+    {
+        "id": "fd35034f31dc58cc",
+        "type": "json",
+        "z": "e0a78ccaa1a24fee",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 330,
+        "y": 80,
+        "wires": [
+            [
+                "3c32393b90f42adb",
+                "2d91e80b893cc0c5"
+            ]
+        ]
+    },
+    {
+        "id": "851cd8dd1fc59ced",
+        "type": "inject",
+        "z": "e0a78ccaa1a24fee",
+        "name": "Submit Payment to eBay",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "3",
+        "topic": "Ordering 2 glasses",
+        "payload": "{\"ID\":\"1\",\"Item\":\"Glass\",\"Price\":\"20\",\"Quantity\":\"2\",\"Payment\":\"Yes\"}",
+        "payloadType": "json",
         "x": 150,
-        "y": 220,
+        "y": 200,
         "wires": [
             [
-                "fad23b9833747f87"
+                "b41d0cf9221c6598"
             ]
         ]
     },
     {
-        "id": "fad23b9833747f87",
-        "type": "http request",
-        "z": "e709bf8418b14a1f",
+        "id": "cd4ed9dbd5779c60",
+        "type": "inject",
+        "z": "e0a78ccaa1a24fee",
+        "name": "Submit Review to eBay",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "5",
+        "topic": "",
+        "payload": "{\"ID\":\"1\",\"Item\":\"Glass\",\"Price\":\"20\",\"Quantity\":\"2\",\"Rating\":\"4\"}",
+        "payloadType": "json",
+        "x": 140,
+        "y": 620,
+        "wires": [
+            [
+                "70fcbbddcc0f1e00"
+            ]
+        ]
+    },
+    {
+        "id": "da7eeb224d55fa74",
+        "type": "json",
+        "z": "e0a78ccaa1a24fee",
         "name": "",
-        "method": "GET",
-        "ret": "txt",
-        "paytoqs": "ignore",
-        "url": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.csv",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "",
-        "x": 340,
-        "y": 220,
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 650,
+        "y": 600,
         "wires": [
             [
-                "06c512fa214f10ac"
+                "19d35ca99f175d55"
             ]
         ]
     },
     {
-        "id": "06c512fa214f10ac",
-        "type": "csv",
-        "z": "e709bf8418b14a1f",
+        "id": "8033c7670b3769c2",
+        "type": "json",
+        "z": "5a272a95b9e43fd7",
         "name": "",
-        "sep": ",",
-        "hdrin": true,
-        "hdrout": "none",
-        "multi": "one",
-        "ret": "\\n",
-        "temp": "",
-        "skip": "0",
-        "strings": true,
-        "include_empty_strings": "",
-        "include_null_values": "",
-        "x": 500,
-        "y": 220,
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 250,
+        "y": 40,
         "wires": [
             [
-                "4527201fcf1bc5e9",
-                "9a18dda30ffa927a"
+                "afa079286f7379e7"
             ]
         ]
     },
     {
-        "id": "4527201fcf1bc5e9",
+        "id": "9746bbe1e484fc34",
+        "type": "json",
+        "z": "5a272a95b9e43fd7",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 250,
+        "y": 160,
+        "wires": [
+            [
+                "a55e5be720bfd1f4",
+                "6322b81f3fd74a66",
+                "b2165e629828026d"
+            ]
+        ]
+    },
+    {
+        "id": "b6992140e5498bc3",
+        "type": "json",
+        "z": "0d5af171dffc9b33",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 250,
+        "y": 220,
+        "wires": [
+            [
+                "12e280081eccc338",
+                "c1daa0f5889a5844"
+            ]
+        ]
+    },
+    {
+        "id": "af6fd09849560520",
+        "type": "json",
+        "z": "0d5af171dffc9b33",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 250,
+        "y": 100,
+        "wires": [
+            [
+                "09bff6986b570a7a"
+            ]
+        ]
+    },
+    {
+        "id": "cd7ddf1b9bce75d5",
         "type": "debug",
-        "z": "e709bf8418b14a1f",
-        "name": "",
+        "z": "206c16fe0637f37b",
+        "name": "Merchant",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "\"Money received to Merchant\"",
+        "targetType": "jsonata",
         "statusVal": "",
         "statusType": "auto",
-        "x": 650,
+        "x": 280,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "d8123aa32db1b909",
+        "type": "json",
+        "z": "206c16fe0637f37b",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 850,
+        "y": 120,
+        "wires": [
+            [
+                "0df8072c5ae2dca5"
+            ]
+        ]
+    },
+    {
+        "id": "991d2318fb22019f",
+        "type": "json",
+        "z": "6a73d91210fde3f6",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 370,
+        "y": 140,
+        "wires": [
+            [
+                "102e8a3b193b3193"
+            ]
+        ]
+    },
+    {
+        "id": "fd0dc3041383cc02",
+        "type": "json",
+        "z": "6a73d91210fde3f6",
+        "name": "",
+        "property": "payload",
+        "action": "str",
+        "pretty": false,
+        "x": 810,
+        "y": 100,
+        "wires": [
+            [
+                "1103e7679ed70055",
+                "c1eda85a7e90cb1d"
+            ]
+        ]
+    },
+    {
+        "id": "3c32393b90f42adb",
+        "type": "link out",
+        "z": "e0a78ccaa1a24fee",
+        "name": "Submit Order to eBay",
+        "links": [
+            "e7b03cae40b95f03"
+        ],
+        "x": 455,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "e7b03cae40b95f03",
+        "type": "link in",
+        "z": "5a272a95b9e43fd7",
+        "name": "Order details from Buyer",
+        "links": [
+            "3c32393b90f42adb"
+        ],
+        "x": 135,
+        "y": 40,
+        "wires": [
+            [
+                "8033c7670b3769c2"
+            ]
+        ]
+    },
+    {
+        "id": "39e15419a1b319f1",
+        "type": "debug",
+        "z": "5a272a95b9e43fd7",
+        "name": "Order to Merchant",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "merchant",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 610,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "286fbb0684fdbb77",
+        "type": "link out",
+        "z": "e0a78ccaa1a24fee",
+        "name": "Submit payment to eBay via Paypal ",
+        "links": [
+            "d764c1a273cbdd75"
+        ],
+        "x": 1035,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "19d35ca99f175d55",
+        "type": "link out",
+        "z": "e0a78ccaa1a24fee",
+        "name": "Submit review to eBay",
+        "links": [
+            "9c6a25a864c678a9"
+        ],
+        "x": 735,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "d764c1a273cbdd75",
+        "type": "link in",
+        "z": "5a272a95b9e43fd7",
+        "name": "Payment to eBay",
+        "links": [
+            "286fbb0684fdbb77"
+        ],
+        "x": 135,
+        "y": 160,
+        "wires": [
+            [
+                "9746bbe1e484fc34"
+            ]
+        ]
+    },
+    {
+        "id": "4bc54496e660c428",
+        "type": "json",
+        "z": "5a272a95b9e43fd7",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 290,
+        "y": 520,
+        "wires": [
+            [
+                "a8731620d8c8d48f"
+            ]
+        ]
+    },
+    {
+        "id": "9c6a25a864c678a9",
+        "type": "link in",
+        "z": "5a272a95b9e43fd7",
+        "name": "Review to store",
+        "links": [
+            "19d35ca99f175d55"
+        ],
+        "x": 135,
+        "y": 520,
+        "wires": [
+            [
+                "4bc54496e660c428"
+            ]
+        ]
+    },
+    {
+        "id": "a8ca2c889138cb67",
+        "type": "debug",
+        "z": "5a272a95b9e43fd7",
+        "name": "Rating by Buyer",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "rating",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "7642d0a02354153f",
+        "type": "debug",
+        "z": "e0a78ccaa1a24fee",
+        "name": "Order Submitted to eBay by Buyer",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 760,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "c5c1a610f0c593f7",
+        "type": "function",
+        "z": "e0a78ccaa1a24fee",
+        "name": "Total",
+        "func": "var val = parseInt(msg.payload[\"Price\"]) * parseInt(msg.payload[\"Quantity\"]);\nmsg.payload.Total = val;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 770,
+        "y": 180,
+        "wires": [
+            [
+                "2801af6dcc05540a",
+                "b79f0f5c613892d1"
+            ]
+        ]
+    },
+    {
+        "id": "b79f0f5c613892d1",
+        "type": "debug",
+        "z": "e0a78ccaa1a24fee",
+        "name": "Paid to eBay",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "msg.payload.Total",
+        "targetType": "jsonata",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 950,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "a55e5be720bfd1f4",
+        "type": "debug",
+        "z": "5a272a95b9e43fd7",
+        "name": "Sent to PayPal",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload.Total",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 440,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "c24d09ce77d71bb1",
+        "type": "debug",
+        "z": "5a272a95b9e43fd7",
+        "name": "Request for Payment",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "afa079286f7379e7",
+        "type": "function",
+        "z": "5a272a95b9e43fd7",
+        "name": "Request",
+        "func": "msg.payload = \"Please submit payment\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 40,
+        "wires": [
+            [
+                "c24d09ce77d71bb1"
+            ]
+        ]
+    },
+    {
+        "id": "331b5e8d6a59f223",
+        "type": "json",
+        "z": "e0a78ccaa1a24fee",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 470,
+        "y": 180,
+        "wires": [
+            [
+                "7fea89d8ae6d34da"
+            ]
+        ]
+    },
+    {
+        "id": "20afdae1a8c31b1d",
+        "type": "link out",
+        "z": "5a272a95b9e43fd7",
+        "name": "Details to Merchant",
+        "links": [
+            "27097529c37e75be"
+        ],
+        "x": 755,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "0fdf5ab412b1c882",
+        "type": "link out",
+        "z": "5a272a95b9e43fd7",
+        "name": "Hold at PayPal",
+        "links": [
+            "6b31a6348a6d5b44"
+        ],
+        "x": 755,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "6b31a6348a6d5b44",
+        "type": "link in",
+        "z": "0d5af171dffc9b33",
+        "name": "Receive money from eBay",
+        "links": [
+            "0fdf5ab412b1c882"
+        ],
+        "x": 135,
+        "y": 100,
+        "wires": [
+            [
+                "af6fd09849560520"
+            ]
+        ]
+    },
+    {
+        "id": "011b6f1f4f1b03df",
+        "type": "debug",
+        "z": "206c16fe0637f37b",
+        "name": "Preparing Item",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "\"Preparing Item\"",
+        "targetType": "jsonata",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 540,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "bc1fd2f5c83c24a8",
+        "type": "delay",
+        "z": "206c16fe0637f37b",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "x": 520,
+        "y": 140,
+        "wires": [
+            [
+                "2205bf425e72f7ea"
+            ]
+        ]
+    },
+    {
+        "id": "a48e7347070791e7",
+        "type": "link out",
+        "z": "206c16fe0637f37b",
+        "name": "Send item to Shipping",
+        "links": [
+            "0615a696f82d85c3"
+        ],
+        "x": 815,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "0615a696f82d85c3",
+        "type": "link in",
+        "z": "6a73d91210fde3f6",
+        "name": "Receive item from Merchant",
+        "links": [
+            "a48e7347070791e7"
+        ],
+        "x": 135,
+        "y": 140,
+        "wires": [
+            [
+                "d2fe422867fec4b3"
+            ]
+        ]
+    },
+    {
+        "id": "d2fe422867fec4b3",
+        "type": "delay",
+        "z": "6a73d91210fde3f6",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "x": 240,
+        "y": 140,
+        "wires": [
+            [
+                "991d2318fb22019f"
+            ]
+        ]
+    },
+    {
+        "id": "7c83fe2bd2638acd",
+        "type": "function",
+        "z": "6a73d91210fde3f6",
+        "name": "Random",
+        "func": "var random = Math.random();\nmsg.payload.Tracking_ID = random*100000;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 680,
+        "y": 140,
+        "wires": [
+            [
+                "fd0dc3041383cc02",
+                "7cf550ba5aa87690"
+            ]
+        ]
+    },
+    {
+        "id": "1103e7679ed70055",
+        "type": "link out",
+        "z": "6a73d91210fde3f6",
+        "name": "Tracking to Merchant",
+        "links": [
+            "b5cb6d3c5cf6dba4"
+        ],
+        "x": 915,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "0b0c646ea5426c84",
+        "type": "delay",
+        "z": "6a73d91210fde3f6",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "10",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "x": 1000,
+        "y": 180,
+        "wires": [
+            [
+                "58e9c8e39b5ea726",
+                "512b1a5e1e1c461d"
+            ]
+        ]
+    },
+    {
+        "id": "58e9c8e39b5ea726",
+        "type": "debug",
+        "z": "6a73d91210fde3f6",
+        "name": "Send Item",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "\"Send Item\"",
+        "targetType": "jsonata",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1150,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "7e1a736a30e1f5ac",
+        "type": "link out",
+        "z": "6a73d91210fde3f6",
+        "name": "Send Item",
+        "links": [
+            "2004a320f67aba06"
+        ],
+        "x": 1275,
         "y": 220,
         "wires": []
     },
     {
-        "id": "9a18dda30ffa927a",
+        "id": "2004a320f67aba06",
+        "type": "link in",
+        "z": "e0a78ccaa1a24fee",
+        "name": "Receive Item",
+        "links": [
+            "7e1a736a30e1f5ac"
+        ],
+        "x": 175,
+        "y": 380,
+        "wires": [
+            [
+                "c301677b21e3de7a"
+            ]
+        ]
+    },
+    {
+        "id": "9058d179cb5e36f5",
+        "type": "debug",
+        "z": "e0a78ccaa1a24fee",
+        "name": "Tracking Info",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload.Tracking_ID",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 470,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "6322b81f3fd74a66",
         "type": "switch",
-        "z": "e709bf8418b14a1f",
-        "name": "",
-        "property": "payload",
+        "z": "5a272a95b9e43fd7",
+        "name": "Check Payment Status",
+        "property": "payload.Payment",
         "propertyType": "msg",
         "rules": [
             {
-                "t": "gte",
-                "v": "7",
+                "t": "eq",
+                "v": "Yes",
                 "vt": "str"
             }
         ],
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 630,
-        "y": 340,
+        "x": 460,
+        "y": 220,
         "wires": [
             [
-                "f757ac4022f1ec22"
+                "ea92c825e7cb4e29"
             ]
         ]
     },
     {
-        "id": "f757ac4022f1ec22",
-        "type": "change",
-        "z": "e709bf8418b14a1f",
+        "id": "ea92c825e7cb4e29",
+        "type": "json",
+        "z": "5a272a95b9e43fd7",
         "name": "",
+        "property": "payload",
+        "action": "str",
+        "pretty": false,
+        "x": 650,
+        "y": 220,
+        "wires": [
+            [
+                "0fdf5ab412b1c882",
+                "20afdae1a8c31b1d"
+            ]
+        ]
+    },
+    {
+        "id": "2801af6dcc05540a",
+        "type": "json",
+        "z": "e0a78ccaa1a24fee",
+        "name": "",
+        "property": "payload",
+        "action": "str",
+        "pretty": false,
+        "x": 930,
+        "y": 180,
+        "wires": [
+            [
+                "286fbb0684fdbb77"
+            ]
+        ]
+    },
+    {
+        "id": "b2165e629828026d",
+        "type": "function",
+        "z": "5a272a95b9e43fd7",
+        "name": "ID: Quantity",
+        "func": "msg.merchant = msg.payload.ID + \": \" + msg.payload.Item +\" of quantity : \"+ msg.payload.Quantity;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 100,
+        "wires": [
+            [
+                "39e15419a1b319f1"
+            ]
+        ]
+    },
+    {
+        "id": "09bff6986b570a7a",
+        "type": "debug",
+        "z": "0d5af171dffc9b33",
+        "name": "Holding",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "\"Money under hold at PayPal\"",
+        "targetType": "jsonata",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 420,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "0df8072c5ae2dca5",
+        "type": "function",
+        "z": "206c16fe0637f37b",
+        "name": "Sending Item",
+        "func": "msg.temp = \"Sending item \"+ msg.payload.Item + \" for shipment\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 990,
+        "y": 120,
+        "wires": [
+            [
+                "a25d81bb5b08598a"
+            ]
+        ]
+    },
+    {
+        "id": "a25d81bb5b08598a",
+        "type": "debug",
+        "z": "206c16fe0637f37b",
+        "name": "Sending for Shipment",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "temp",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1180,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "139d2fe77ff5d914",
+        "type": "debug",
+        "z": "e0a78ccaa1a24fee",
+        "name": "Delivery",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "\"Item has been delivered\"",
+        "targetType": "jsonata",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 640,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "0a755b2533360ce9",
+        "type": "link out",
+        "z": "e0a78ccaa1a24fee",
+        "name": "Notify eBay",
+        "links": [
+            "c798d8fc76e06202"
+        ],
+        "x": 395,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "c798d8fc76e06202",
+        "type": "link in",
+        "z": "5a272a95b9e43fd7",
+        "name": "Receive about delivery",
+        "links": [
+            "0a755b2533360ce9"
+        ],
+        "x": 135,
+        "y": 400,
+        "wires": [
+            [
+                "1a5bb646886e76d6",
+                "5293a942c87b58b2",
+                "99a2634defeea050"
+            ]
+        ]
+    },
+    {
+        "id": "1a5bb646886e76d6",
+        "type": "link out",
+        "z": "5a272a95b9e43fd7",
+        "name": "Notify PayPal",
+        "links": [
+            "663c0bfe0df45c6e"
+        ],
+        "x": 215,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "663c0bfe0df45c6e",
+        "type": "link in",
+        "z": "0d5af171dffc9b33",
+        "name": "Notification from eBay",
+        "links": [
+            "1a5bb646886e76d6"
+        ],
+        "x": 135,
+        "y": 220,
+        "wires": [
+            [
+                "b6992140e5498bc3"
+            ]
+        ]
+    },
+    {
+        "id": "12e280081eccc338",
+        "type": "link out",
+        "z": "0d5af171dffc9b33",
+        "name": "Send Money to Merchant",
+        "links": [
+            "8900f0099dab42d4"
+        ],
+        "x": 375,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "c1daa0f5889a5844",
+        "type": "debug",
+        "z": "0d5af171dffc9b33",
+        "name": "Money to Merchant",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "\"Sending money to Merchant\"",
+        "targetType": "jsonata",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 450,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "8900f0099dab42d4",
+        "type": "link in",
+        "z": "206c16fe0637f37b",
+        "name": "Receive Money",
+        "links": [
+            "12e280081eccc338"
+        ],
+        "x": 175,
+        "y": 320,
+        "wires": [
+            [
+                "cd7ddf1b9bce75d5"
+            ]
+        ]
+    },
+    {
+        "id": "5293a942c87b58b2",
+        "type": "debug",
+        "z": "5a272a95b9e43fd7",
+        "name": "eBay Delivery System",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "\"Item delivered to Buyer\"",
+        "targetType": "jsonata",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 300,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "f45d5f9b869abba9",
+        "type": "json",
+        "z": "e0a78ccaa1a24fee",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 290,
+        "y": 300,
+        "wires": [
+            [
+                "9058d179cb5e36f5"
+            ]
+        ]
+    },
+    {
+        "id": "99a2634defeea050",
+        "type": "delay",
+        "z": "5a272a95b9e43fd7",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "3",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "x": 260,
+        "y": 400,
+        "wires": [
+            [
+                "8320c3dbc1c2b315"
+            ]
+        ]
+    },
+    {
+        "id": "c1d3778e29d02411",
+        "type": "debug",
+        "z": "5a272a95b9e43fd7",
+        "name": "Asking for Review",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "\"Please submit the review of the item.\"",
+        "targetType": "jsonata",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "a8731620d8c8d48f",
+        "type": "function",
+        "z": "5a272a95b9e43fd7",
+        "name": "",
+        "func": "msg.rating = \"Rating for the item: \" + msg.payload.Rating\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 520,
+        "wires": [
+            [
+                "a8ca2c889138cb67"
+            ]
+        ]
+    },
+    {
+        "id": "b41d0cf9221c6598",
+        "type": "switch",
+        "z": "e0a78ccaa1a24fee",
+        "name": "Order",
+        "property": "order",
+        "propertyType": "global",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 330,
+        "y": 200,
+        "wires": [
+            [
+                "331b5e8d6a59f223"
+            ],
+            [
+                "be8b5eca58e7d72d"
+            ]
+        ]
+    },
+    {
+        "id": "be8b5eca58e7d72d",
+        "type": "debug",
+        "z": "e0a78ccaa1a24fee",
+        "name": "Order",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "\"Order first\"",
+        "targetType": "jsonata",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 470,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "70fcbbddcc0f1e00",
+        "type": "switch",
+        "z": "e0a78ccaa1a24fee",
+        "name": "",
+        "property": "review",
+        "propertyType": "global",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 330,
+        "y": 620,
+        "wires": [
+            [
+                "0f4dc49c9ec7d8c1"
+            ],
+            [
+                "f5ea979eba2227cd"
+            ]
+        ]
+    },
+    {
+        "id": "f5ea979eba2227cd",
+        "type": "debug",
+        "z": "e0a78ccaa1a24fee",
+        "name": "Order First",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "\"Place the order first\"",
+        "targetType": "jsonata",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 490,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "2d91e80b893cc0c5",
+        "type": "change",
+        "z": "e0a78ccaa1a24fee",
+        "name": "Global Order",
         "rules": [
             {
                 "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "PANIC!",
+                "p": "order",
+                "pt": "global",
+                "to": "true",
+                "tot": "bool"
+            },
+            {
+                "t": "set",
+                "p": "review",
+                "pt": "global",
+                "to": "true",
+                "tot": "bool"
+            },
+            {
+                "t": "set",
+                "p": "status",
+                "pt": "global",
+                "to": "Added to cart",
                 "tot": "str"
             }
         ],
@@ -206,28 +1264,560 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 780,
-        "y": 340,
+        "x": 510,
+        "y": 100,
         "wires": [
             [
-                "db695bb9629fa79b"
+                "7642d0a02354153f"
             ]
         ]
     },
     {
-        "id": "db695bb9629fa79b",
+        "id": "5e9902a8904bb102",
+        "type": "change",
+        "z": "e0a78ccaa1a24fee",
+        "name": "Global O&P",
+        "rules": [
+            {
+                "t": "set",
+                "p": "order",
+                "pt": "global",
+                "to": "false",
+                "tot": "bool"
+            },
+            {
+                "t": "set",
+                "p": "payment",
+                "pt": "global",
+                "to": "false",
+                "tot": "bool"
+            },
+            {
+                "t": "set",
+                "p": "status",
+                "pt": "global",
+                "to": "Item Delivered",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 450,
+        "y": 360,
+        "wires": [
+            [
+                "139d2fe77ff5d914"
+            ]
+        ]
+    },
+    {
+        "id": "7fea89d8ae6d34da",
+        "type": "change",
+        "z": "e0a78ccaa1a24fee",
+        "name": "Global Payment",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payment",
+                "pt": "global",
+                "to": "true",
+                "tot": "bool"
+            },
+            {
+                "t": "set",
+                "p": "Status",
+                "pt": "global",
+                "to": "Order Placed",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 620,
+        "y": 180,
+        "wires": [
+            [
+                "c5c1a610f0c593f7"
+            ]
+        ]
+    },
+    {
+        "id": "0f4dc49c9ec7d8c1",
+        "type": "change",
+        "z": "e0a78ccaa1a24fee",
+        "name": "Global O&P",
+        "rules": [
+            {
+                "t": "set",
+                "p": "review",
+                "pt": "global",
+                "to": "false",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 490,
+        "y": 600,
+        "wires": [
+            [
+                "da7eeb224d55fa74"
+            ]
+        ]
+    },
+    {
+        "id": "8320c3dbc1c2b315",
+        "type": "switch",
+        "z": "5a272a95b9e43fd7",
+        "name": "Review",
+        "property": "review",
+        "propertyType": "global",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 420,
+        "y": 400,
+        "wires": [
+            [
+                "c1d3778e29d02411"
+            ],
+            [
+                "45dc53cf6f0c7c38"
+            ]
+        ]
+    },
+    {
+        "id": "45dc53cf6f0c7c38",
         "type": "debug",
-        "z": "e709bf8418b14a1f",
-        "name": "",
+        "z": "5a272a95b9e43fd7",
+        "name": "Thanking for Review",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "\"Thanks for the review\"",
+        "targetType": "jsonata",
         "statusVal": "",
         "statusType": "auto",
-        "x": 900,
-        "y": 260,
+        "x": 600,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "b5cb6d3c5cf6dba4",
+        "type": "link in",
+        "z": "206c16fe0637f37b",
+        "name": "Status From Shipper",
+        "links": [
+            "1103e7679ed70055"
+        ],
+        "x": 175,
+        "y": 220,
+        "wires": [
+            [
+                "6febfeb90edfa17f",
+                "d2c232bf28cb0463"
+            ]
+        ]
+    },
+    {
+        "id": "6febfeb90edfa17f",
+        "type": "link out",
+        "z": "206c16fe0637f37b",
+        "name": "Status to eBay",
+        "links": [
+            "956a0e905e5dc563"
+        ],
+        "x": 275,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "f12999816f42c61b",
+        "type": "inject",
+        "z": "e0a78ccaa1a24fee",
+        "name": "Ask for Status",
+        "props": [
+            {
+                "p": "status",
+                "v": "status",
+                "vt": "global"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 110,
+        "y": 500,
+        "wires": [
+            [
+                "fdeb3b0561c38c89"
+            ]
+        ]
+    },
+    {
+        "id": "fdeb3b0561c38c89",
+        "type": "switch",
+        "z": "e0a78ccaa1a24fee",
+        "name": "Status",
+        "property": "order",
+        "propertyType": "global",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 270,
+        "y": 500,
+        "wires": [
+            [
+                "443599309e78fd0d"
+            ],
+            [
+                "db0face4e9ce3ff3"
+            ]
+        ]
+    },
+    {
+        "id": "0dd5ea226ec81473",
+        "type": "debug",
+        "z": "e0a78ccaa1a24fee",
+        "name": "Status",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "status",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "443599309e78fd0d",
+        "type": "change",
+        "z": "e0a78ccaa1a24fee",
+        "name": "Message Status",
+        "rules": [
+            {
+                "t": "set",
+                "p": "status",
+                "pt": "msg",
+                "to": "status",
+                "tot": "global"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 440,
+        "y": 480,
+        "wires": [
+            [
+                "0dd5ea226ec81473"
+            ]
+        ]
+    },
+    {
+        "id": "27097529c37e75be",
+        "type": "link in",
+        "z": "206c16fe0637f37b",
+        "name": "Details from eBay",
+        "links": [
+            "20afdae1a8c31b1d"
+        ],
+        "x": 175,
+        "y": 100,
+        "wires": [
+            [
+                "41ea6b909a95779f"
+            ]
+        ]
+    },
+    {
+        "id": "41ea6b909a95779f",
+        "type": "change",
+        "z": "206c16fe0637f37b",
+        "name": "Preparing Item",
+        "rules": [
+            {
+                "t": "set",
+                "p": "status",
+                "pt": "global",
+                "to": "Preparing Item",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 100,
+        "wires": [
+            [
+                "bc1fd2f5c83c24a8",
+                "011b6f1f4f1b03df"
+            ]
+        ]
+    },
+    {
+        "id": "2205bf425e72f7ea",
+        "type": "change",
+        "z": "206c16fe0637f37b",
+        "name": "Update Status",
+        "rules": [
+            {
+                "t": "set",
+                "p": "status",
+                "pt": "global",
+                "to": "Sending for shipment",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 680,
+        "y": 140,
+        "wires": [
+            [
+                "d8123aa32db1b909",
+                "a48e7347070791e7"
+            ]
+        ]
+    },
+    {
+        "id": "102e8a3b193b3193",
+        "type": "change",
+        "z": "6a73d91210fde3f6",
+        "name": "Update Status",
+        "rules": [
+            {
+                "t": "set",
+                "p": "status",
+                "pt": "global",
+                "to": "Ready for shipment",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 520,
+        "y": 140,
+        "wires": [
+            [
+                "7c83fe2bd2638acd"
+            ]
+        ]
+    },
+    {
+        "id": "7cf550ba5aa87690",
+        "type": "change",
+        "z": "6a73d91210fde3f6",
+        "name": "Update Status",
+        "rules": [
+            {
+                "t": "set",
+                "p": "status",
+                "pt": "global",
+                "to": "Nearby facility",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 840,
+        "y": 180,
+        "wires": [
+            [
+                "0b0c646ea5426c84"
+            ]
+        ]
+    },
+    {
+        "id": "512b1a5e1e1c461d",
+        "type": "change",
+        "z": "6a73d91210fde3f6",
+        "name": "Update Status",
+        "rules": [
+            {
+                "t": "set",
+                "p": "status",
+                "pt": "global",
+                "to": "Out for delivery",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1160,
+        "y": 220,
+        "wires": [
+            [
+                "7e1a736a30e1f5ac"
+            ]
+        ]
+    },
+    {
+        "id": "c301677b21e3de7a",
+        "type": "delay",
+        "z": "e0a78ccaa1a24fee",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "x": 280,
+        "y": 380,
+        "wires": [
+            [
+                "5e9902a8904bb102",
+                "0a755b2533360ce9"
+            ]
+        ]
+    },
+    {
+        "id": "db0face4e9ce3ff3",
+        "type": "debug",
+        "z": "e0a78ccaa1a24fee",
+        "name": "Order First",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "\"Place the order first\"",
+        "targetType": "jsonata",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 430,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "d2c232bf28cb0463",
+        "type": "debug",
+        "z": "206c16fe0637f37b",
+        "name": "eBay Shipping Status",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "\"Sent delivery status to eBay\"",
+        "targetType": "jsonata",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 360,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "956a0e905e5dc563",
+        "type": "link in",
+        "z": "5a272a95b9e43fd7",
+        "name": "Status from eBay",
+        "links": [
+            "6febfeb90edfa17f"
+        ],
+        "x": 135,
+        "y": 280,
+        "wires": [
+            [
+                "965ea29213d4db0a"
+            ]
+        ]
+    },
+    {
+        "id": "c1eda85a7e90cb1d",
+        "type": "link out",
+        "z": "6a73d91210fde3f6",
+        "name": "Tracking to Buyer",
+        "links": [
+            "7e6874a73d1a2b5d"
+        ],
+        "x": 915,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "7e6874a73d1a2b5d",
+        "type": "link in",
+        "z": "e0a78ccaa1a24fee",
+        "name": "Tracking Info from shipper",
+        "links": [
+            "c1eda85a7e90cb1d"
+        ],
+        "x": 175,
+        "y": 300,
+        "wires": [
+            [
+                "f45d5f9b869abba9"
+            ]
+        ]
+    },
+    {
+        "id": "965ea29213d4db0a",
+        "type": "debug",
+        "z": "5a272a95b9e43fd7",
+        "name": "Update tracking status",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "\"Updated on eBay\"",
+        "targetType": "jsonata",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 320,
+        "y": 280,
         "wires": []
     }
 ]
